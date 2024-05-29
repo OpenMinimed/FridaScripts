@@ -5,12 +5,12 @@ var sakepath = 'com.medtronic.minimed.sake.SAKE_KEY_DATABASE_S';
 //https://stackoverflow.com/questions/69503358/unable-to-retrieve-value-from-interface-using-frida
 
 function bytes_to_hexstr(array) {
-    var result = '';
-    if (array == null) {
-        return '<null>';
-    }
-    for (var i = 0; i < array.length; ++i) result += ('0' + (array[i] & 0xFF).toString(16)).slice(-2);
-    return result;
+	var result = '';
+	if (array == null) {
+		return '<null>';
+	}
+	for (var i = 0; i < array.length; ++i) result += ('0' + (array[i] & 0xFF).toString(16)).slice(-2);
+	return result;
 };
 
 
@@ -42,7 +42,7 @@ setTimeout(function () {
 			return toret;
 		}
 
-	
+
 		socket_receiver.onMessage.overload("okhttp3.WebSocket", "java.lang.String").implementation = function (socket, str) {
 			console.log(">>", str);
 			var toret = this.onMessage.overload("okhttp3.WebSocket", "java.lang.String").call(this, socket, str);
@@ -54,7 +54,7 @@ setTimeout(function () {
 			var toret = this.onMessage.overload("okhttp3.WebSocket", "okio.ByteString").call(this, socket, bytestr);
 			return toret;
 		}
-		
+
 
 		socket_sender.sendByteStringMessage.overload("[B").implementation = function (msg) {
 			console.log("<<", bytes_to_hexstr(msg));
@@ -66,10 +66,10 @@ setTimeout(function () {
 			var toret = this.sendStringMessage.overload("java.lang.String").call(this, msg);
 			return toret;
 		}
-		
-		sake.$init.overload("long", "boolean").implementation = function(j, z) {
-			var toret = this.sendStringMessage.overload("long", "boolean").call(this, j,z);
-			console.log("init key db called:", j,z, "toret: ", toret);
+
+		sake.$init.overload("long", "boolean").implementation = function (j, z) {
+			var toret = this.sendStringMessage.overload("long", "boolean").call(this, j, z);
+			console.log("init key db called:", j, z, "toret: ", toret);
 			return toret;
 
 		}
