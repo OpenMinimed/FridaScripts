@@ -1,3 +1,5 @@
+// maybe also for v2.2.1 
+
 function hexToBytes(hex) {
     let bytes = [];
     for (let c = 0; c < hex.length; c += 2) bytes.push(parseInt(hex.substr(c, 2), 16));
